@@ -1,4 +1,4 @@
-return(function(...) 
+
 
     local blacklist = {
         "CHEATER777585",
