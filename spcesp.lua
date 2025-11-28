@@ -3,6 +3,7 @@
 local allowedUserIDs = {
     1411788887,
     3614588702,
+    8692629785,
 }
 
 local function checkUserID()
