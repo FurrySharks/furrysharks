@@ -25,23 +25,23 @@ if not checkUserID() then
 end
 
 
-local EXPECTED_URL = "https://raw.githubusercontent.com/FurrySharks/furrysharks/refs/heads/main/yaya.lua"
+local EXPECTED = "FurrySharks/furrysharks" -- часть репозитория
 
-local function checkSource()
-    local success, hash = pcall(getscripthash)
-    if not success then return false end
+local function isStolen()
+    local info = debug.getinfo(2, "s")
+    local source = info.source or ""
     
-    local currentUrl = "https://raw.githubusercontent.com/" .. hash
-    
-    if currentUrl ~= EXPECTED_URL and currentUrl ~= EXPECTED_URL:gsub("refs/heads", "refs/tags") then
-        return false
+    -- source выглядит примерно так: "@https://raw.githubusercontent.com/FurrySharks/furrysharks/abc123/yaya.lua"
+    if source:find("raw.githubusercontent.com") then
+        if not source:find(EXPECTED) then
+            return false -- оригинал
+        end
     end
     return true
 end
 
-if not checkSource() then
-    error("haha fuck off skid")
-    -- или просто return / while true do task.wait(9e9) end
+if isStolen() then
+    while true do task.wait(10) end -- или error, или game.Players.LocalPlayer:Kick()
 end
 
 print("yep its working")
