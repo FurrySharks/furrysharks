@@ -31,7 +31,7 @@ local function isStolen()
     local info = debug.getinfo(2, "s")
     local source = info.source or ""
     
-    -- source выглядит примерно так: "@https://raw.githubusercontent.com/FurrySharks/furrysharks/abc123/yaya.lua"
+    
     if source:find("raw.githubusercontent.com") then
         if not source:find(EXPECTED) then
             return false -- оригинал
