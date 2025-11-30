@@ -1,41 +1,30 @@
--- ЖЁСТКАЯ ЗАЩИТА ПО ТОЧНОЙ ССЫЛКЕ (декабрь 2025, работает везде)
+-- HWID PROTECTION
+local allowedHWIDs = {
+    "1031e8de-c5aa-11f0-a1cd-806e6f6e6963",
+}
 
-local OFFICIAL_URL = "https://raw.githubusercontent.com/FurrySharks/furrysharks/refs/heads/main/yaya.lua"
-
-local function getCurrentScriptUrl()
-    -- Способ 1: getscripthash() — возвращает точный путь на GitHub (лучший способ 2025-2026)
-    local ok, hash = pcall(getscripthash)
-    if ok and hash and type(hash) == "string" and hash ~= "" then
-        return "https://raw.githubusercontent.com/" .. hash:gsub("^/+", "")
+local function getHWID()
+    if gethwid then
+        return gethwid()
+    elseif game:GetService("RbxAnalyticsService") then
+        return game:GetService("RbxAnalyticsService"):GetClientId()
     end
-
-    -- Способ 2: debug.getinfo — на случай очень старого эксплойта
-    for i = 1, 10 do
-        local success, info = pcall(debug.getinfo, i, "s")
-        if success and info and info.source then
-            local src = info.source
-            if src:sub(1,1) == "@" then
-                src = src:sub(2) -- убираем @
-                if src:find("https://") or src:find("http://") then
-                    return src:lower()
-                end
-            end
-        end
-    end
-
     return nil
 end
 
-local currentUrl = getCurrentScriptUrl()
-
-if not currentUrl or not currentUrl:find(OFFICIAL_URL:lower()) then
-    -- Это не твоя ссылка → в топку
-    local plr = game:GetService("Players").LocalPlayer
-    if plr then
-        plr:Kick("Этот скрипт работает ТОЛЬКО с официальной ссылки!\n\nПравильная:\n" .. OFFICIAL_URL)
-    end
-    while true do task.wait(9e9) end
+local currentHWID = getHWID()
+if not currentHWID then 
+    while true do end
 end
 
--- Если дошёл сюда — значит человек запустил именно через твою ссылку
-print("Оригинальная ссылка подтверждена! Скрипт запущен.")
+local authorized = false
+for _, hwid in ipairs(allowedHWIDs) do
+    if currentHWID == hwid then
+        authorized = true
+        break
+    end
+end
+
+if not authorized then
+    while true do end
+end
