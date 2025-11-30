@@ -25,33 +25,6 @@ if not checkUserID() then
 end
 
 
-
-
-local allowedUserIDs = {
-    1411788887,
-    3614588702,
-    8692629785,
-    8602525544,
-}
-
-local function checkUserID()
-    local player = game:GetService("Players").LocalPlayer
-    local userID = player.UserId
-    
-    for _, allowedID in ipairs(allowedUserIDs) do
-        if userID == allowedID then
-            return true
-        end
-    end
-    
-    return false
-end
-
-if not checkUserID() then
-    return
-end
-
-
 local function isOriginal()
     -- Способ 1: getscripthash() — самый надёжный (есть почти во всех актуальных эксплойтах)
     local success, hash = pcall(getscripthash)
@@ -85,4 +58,3 @@ if not isOriginal() then
 end
 
 print("yep its working")
-
