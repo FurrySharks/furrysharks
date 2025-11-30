@@ -1,6 +1,6 @@
 -- ЖЁСТКАЯ ЗАЩИТА ПО ТОЧНОЙ ССЫЛКЕ (декабрь 2025, работает везде)
 
-local OFFICIAL_URL = "https://raw.githubusercontent.com/ramzesuskan/godshub/refs/heads/main/mommy.lua"
+local OFFICIAL_URL = "https://raw.githubusercontent.com/FurrySharks/furrysharks/refs/heads/main/yaya.lua"
 
 local function getCurrentScriptUrl()
     -- Способ 1: getscripthash() — возвращает точный путь на GitHub (лучший способ 2025-2026)
