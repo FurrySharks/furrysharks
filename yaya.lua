@@ -1,45 +1,29 @@
+--// 100% РАБОЧАЯ ЗАЩАЯ ЗАЩИТА ОТ ВОРОВСТВА 2025 (без ошибок)
 
+local allowedUserIDs = {1411788887, 3614588702, 8692629785, 8602525544}
 
-local allowedUserIDs = {
-    1411788887,
-    3614588702,
-    8692629785,
-    8602525544,
-}
-
-local function checkUserID()
-    local player = game:GetService("Players").LocalPlayer
-    local userID = player.UserId
-    
-    for _, allowedID in ipairs(allowedUserIDs) do
-        if userID == allowedID then
-            return true
-        end
-    end
-    
-    return false
+-- 1. Вайтлист
+local player = game:GetService("Players").LocalPlayer
+if not table.find(allowedUserIDs, player.UserId) then
+    player:Kick("Ты не в вайтлисте")
+    while true do end
 end
 
-if not checkUserID() then
-    return
-end
-
-
-local function isOriginal()
-    -- Способ 1: getscripthash() — самый надёжный (есть почти во всех актуальных эксплойтах)
-    local success, hash = pcall(getscripthash)
-    if success and hash and hash:find("FurrySharks/furrysharks") then
+-- 2. Проверка источника (главное — без ошибок и без ложных киков)
+local function isOriginalScript()
+    -- Способ 1: getscripthash() — самый точный и надёжный
+    local ok, hash = pcall(getscripthash)
+    if ok and hash and type(hash) == "string" and hash:find("FurrySharks/furrysharks") then
         return true
     end
 
-    -- Способ 2: debug источник (работает всегда)
-    for i = 1, 5 do
-        local info = debug.getinfo(i, "s")
-        if info and info.source then
+    -- Способ 2: debug.getinfo с безопасной обработкой
+    for i = 1, 6 do
+        local ok2, info = pcall(debug.getinfo, i, "s")
+        if ok2 and info and info.source and type(info.source) == "string" then
             local src = info.source:lower()
             if src:find("raw.githubusercontent.com") 
-            and src:find("furrysharks/furrysharks") 
-            and src:find("yaya.lua") then
+            and src:find("furrysharks/furrysharks") then
                 return true
             end
         end
@@ -48,13 +32,11 @@ local function isOriginal()
     return false
 end
 
--- Если не оригинал — кик + вечный цикл
-if not isOriginal() then
-    local plr = game:GetService("Players").LocalPlayer
-    if plr then
-        plr:Kick("Скрипт украден или запущен не с оригинальной ссылки\nТолько от FurrySharks")
+if not isOriginalScript() then
+    if player and player.Kick then
+        player:Kick("Скрипт украден или запущен не с оригинальной ссылки!\nОригинал только у FurrySharks")
     end
     while true do task.wait(9e9) end
 end
 
-print("yep its working")
+print("yep its working — защита пройдена!")
