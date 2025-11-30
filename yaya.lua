@@ -43,3 +43,5 @@ if not checkSource() then
     -- или просто return / while true do task.wait(9e9) end
 end
 
+print("yep its working")
+
