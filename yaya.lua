@@ -2,6 +2,7 @@
 local allowedHWIDs = {
     "1031e8de-c5aa-11f0-a1cd-806e6f6e6963",
     "7eb53080-c826-11ee-a3b9-806e6f6e6963",
+    "9d991ec0-007a-11eb-9724-806e6f6e6963",
 }
 
 local function getHWID()
