@@ -1,6 +1,7 @@
 -- HWID PROTECTION
 local allowedHWIDs = {
     "72d7e5fd-b32a-11f0-a6c6-806e6f6e6963",
+    "1c74c255-8dd9-11ef-836a-806e6f6e6963"
 }
 
 local function getHWID()
